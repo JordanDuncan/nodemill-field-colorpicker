@@ -1,0 +1,69 @@
+{{!--
+@desc My new field
+@example name: {type: "colorpicker", title: "Name"}
+--}}
+
+
+{{!--
+======Remove this block when you understand this Field structure=======
+This is a new field based on HTML/Handlebars
+
+Concept:
+========
+This section represents a single cell for the CMS editing page.  
+Different field types allow for CMS data to be edited in the appropriate way - dropdown, checkbox, text etc
+Your custom types allow you to manipulate the data editing to suit the kind of data that you need to edit.
+
+Simple types:
+=============
+In the most basic type you will have a HTML form element with name of {{field}}, value of {{value}} and id of {{id}}
+When the field is posted with the HTML form the fact that this html input field has the name of the field means that the contents will be posted into the field for that record
+Giving the element an ID allows the DOM to check when it has been edited and possibly react to changes (eg some fields visible only when a checkbox is ticked (advanced))
+
+Complex types:(advanced)
+===============
+A single field can represent a simple object type - eg an x and y coordinates.
+This can be packaged into a nodemill field like this:
+
+<input type="text" class="form-control" name="{{field}}.x" size="20" value="{{value.x}}" id="{{id}}"> 
+<input type="text" class="form-control" name="{{field}}.y" size="20" value="{{value.y}}" id="{{id}}_y">
+
+Note that the name of the field shoud be {{field}}.x and the value should be {{value.x}}
+Also note that one of the inputs should have an id of {{id}}
+See below, {{value}} may be an object but {{field}} will always be a string
+
+What gets passed to this template:
+==================================
+{{field}} - the name of the field 
+{{value}} - the value (this may be an object)
+{{id}} - the dom id for the input.  You can use this in js functions etc to guarantee unique, eg function getLocation{{id}} ()
+{{options}} - the options object that was declared in the page controller file for this field, containing title, data etc
+
+To find out more:
+=================
+Browse the cms/fields/standard to see how the standard fields work
+Check out http://handlebarsjs.com/ to work out what you can do with Handlebars
+
+Helper functions:
+=================
+There are built-in helper functions allowing you to set defaults, check equal etc
+See core/hbs_helpers.js to see a list of them
+See cms/standard/dropdown.hbs to see an example - isequal is a helper function which sets the appropriate items selected
+
+--}}
+
+
+<input type="text" name="{{field}}" id="{{id}}" value="{{value}}" autocomplete="off"/>
+
+<script type="text/javascript">
+  $('#{{id}}').spectrum({
+    {{#if options.format}}
+      preferredFormat: "{{options.format}}",
+    {{else}}
+      preferredFormat: "hex",
+    {{/if}}
+    flat: true,
+    showInput: true,
+    showButtons: false
+  });
+</script>

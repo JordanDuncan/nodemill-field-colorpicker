@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "desc": "Nodemill wrapper for Spectrum by @bgrins",
+  "keywords": "spectrum, color, colour, picker",
+  "author": {
+    "id": 4,
+    "name": "Jordan Duncan",
+    "nickname": ""
+  }
+}
